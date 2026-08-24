@@ -15,6 +15,7 @@ main().then(() =>{
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
+app.use(express.urlencoded({extended: true}));
 
 async function main() {
     await mongoose.connect(MONGO_URL);
@@ -31,6 +32,14 @@ app.get("/items", async (req, res) => {
      res.render("items/index.ejs", {allItems});
 });
  // index route end
+
+//  show route start
+   app.get("/items/:id", async (req, res) => {
+     let {id} = req.params;
+    const item = await Item.findById(id);
+    res.render("items/show.ejs", {item});
+   });
+// show route end
 
 // app.get("/textItem", async (req, res) =>{
 //     let sampleItem = new Item({
