@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-comerce</title>
+</head>
+<body>
+     <h3>Edit your item</h3>
+    <form method="POST" action="/items/<%= item._id %>?_method=PUT">
+      <input name="item[title]" value="<%= item.title %>" type="text" />
+      <br /><br />
+      <textarea
+        name="item[description]"
+         <%= item.description %>
+        type="text"
+      ></textarea>
+      <br /><br />
+      <input name="item[image]" value="<%= item.image %>" type="text" />
+      <br /><br />
+      <input name="item[price]" value="<%= item.price %>" type="number" />
+      <br /><br />
+      <input name="item[category]" value="<%= item.category %>" type="text" />
+      <br /><br />
+      <input name="item[brand]" value="<%= item.brand %>" type="text" />
+      <br /><br />
+      <input name="item[stock]" value="<%= item.stock %>" type="number" />
+      <br /><br />
+      <button>Edit</button>
+    </form>
+</body>
+</html>

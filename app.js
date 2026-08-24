@@ -3,6 +3,7 @@ const app = express();
 const mongoose = require('mongoose')
 const Item = require("./models/item.js");
 const path = require("path");
+const methodOverride = require("method-override");
 
 const MONGO_URL = "mongodb://127.0.0.1:27017/Ecommerce";
 const PORT = 5001;
@@ -16,6 +17,7 @@ main().then(() => {
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: true }));
+app.use(methodOverride("_method"))
 
 async function main() {
     await mongoose.connect(MONGO_URL);
@@ -48,12 +50,28 @@ app.get("/items/:id", async (req, res) => {
 // show route end
 
 // Create routes starts
-  app.post("/items", async(req, res) => {
-   const newItem = new Item(req.body.item);
-   await newItem .save();
+app.post("/items", async (req, res) => {
+    const newItem = new Item(req.body.item);
+    await newItem.save();
     res.redirect("/items");
-  });
+});
 // Create routes end
+
+// start edit route
+app.get("/items/:id/edit", async (req, res) => {
+    let { id } = req.params;
+    const item = await Item.findById(id);
+    res.render("items/edit.ejs", {item});
+});
+// end edit routes
+
+//  start update route
+app.put("/items/:id", async(req,res) => {
+  let {id} = req.params;
+  await Item.findByIdAndUpdate(id, {...req.body.item});
+  res.redirect(`/items/${id}`);
+});
+// end update route
 
 
 
