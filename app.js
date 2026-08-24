@@ -7,39 +7,55 @@ const path = require("path");
 const MONGO_URL = "mongodb://127.0.0.1:27017/Ecommerce";
 const PORT = 5001;
 
-main().then(() =>{
-  console.log("connected to DB");
-}).catch(err =>{
-   console.log(err);
+main().then(() => {
+    console.log("connected to DB");
+}).catch(err => {
+    console.log(err);
 });
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 
 async function main() {
     await mongoose.connect(MONGO_URL);
 }
 
 
-app.get("/",(req, res) =>{
+app.get("/", (req, res) => {
     res.send("Hi I am a ROOT");
 });
 
 // index route start
 app.get("/items", async (req, res) => {
-     const allItems = await Item.find({});
-     res.render("items/index.ejs", {allItems});
+    const allItems = await Item.find({});
+    res.render("items/index.ejs", { allItems });
 });
- // index route end
+// index route end
+
+// start new route
+app.get("/items/new", async (req, res) => {
+    res.render("items/new.ejs");
+});
+// end new route
 
 //  show route start
-   app.get("/items/:id", async (req, res) => {
-     let {id} = req.params;
+app.get("/items/:id", async (req, res) => {
+    let { id } = req.params;
     const item = await Item.findById(id);
-    res.render("items/show.ejs", {item});
-   });
+    res.render("items/show.ejs", { item });
+});
 // show route end
+
+// Create routes starts
+  app.post("/items", async(req, res) => {
+   const newItem = new Item(req.body.item);
+   await newItem .save();
+    res.redirect("/items");
+  });
+// Create routes end
+
+
 
 // app.get("/textItem", async (req, res) =>{
 //     let sampleItem = new Item({
@@ -57,5 +73,5 @@ app.get("/items", async (req, res) => {
 // });
 
 app.listen(PORT, () => {
-  console.log(`server is listening on PORT http://localhost:${PORT}`)
+    console.log(`server is listening on PORT http://localhost:${PORT}`)
 })
