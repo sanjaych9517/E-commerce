@@ -15,7 +15,11 @@
       <li><%= item.brand %></li>
       <li><%= item.stock %></li>
     </ul>
-    <br>
+    <br />
     <a href="/items/<%= item._id%>/edit">Edit this item</a>
+    <br /><br />
+    <form method="POST" action="/items/<%= item._id %>?_method=DELETE">
+      <button>Delete fhis item</button>
+    </form>
   </body>
 </html>

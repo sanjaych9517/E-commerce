@@ -1,20 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>E-comerce</title>
-</head>
-<body>
-     <h3>Edit your item</h3>
+  </head>
+  <body>
+    <h3>Edit your item</h3>
     <form method="POST" action="/items/<%= item._id %>?_method=PUT">
       <input name="item[title]" value="<%= item.title %>" type="text" />
       <br /><br />
-      <textarea
-        name="item[description]"
-         <%= item.description %>
-        type="text"
-      ></textarea>
+      <textarea name="item[description]"><%= item.description %>
+       </textarea>
       <br /><br />
       <input name="item[image]" value="<%= item.image %>" type="text" />
       <br /><br />
@@ -28,5 +25,5 @@
       <br /><br />
       <button>Edit</button>
     </form>
-</body>
+  </body>
 </html>

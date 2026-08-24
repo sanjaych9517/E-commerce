@@ -73,6 +73,15 @@ app.put("/items/:id", async(req,res) => {
 });
 // end update route
 
+// start delete routes
+ app.delete("/items/:id", async(req, res) => {
+ let {id} = req.params;
+ let deletedItem = await Item.findByIdAndDelete(id);
+ console.log(deletedItem);
+ res.redirect("/items");
+ });
+// end delete routes
+
 
 
 // app.get("/textItem", async (req, res) =>{
