@@ -54,5 +54,58 @@
     justify-content: center;
     align-items: space-evenly;
     text-align: center;
-    
+}
+
+/* footer style end */
+
+/* card style start */
+.card {
+
+    /* border: none !important; */
+    margin-bottom: 2.2rem;
+    height: 100% !important;
+}
+
+.card-wrap {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    align-items: center !important;
+    justify-content: space-around !important;
+}
+
+.card-img-top {
+    height: 250px !important;
+    border-radius: 1.3rem !important;
+    width: 100% !important;
+    object-fit: contain !important;
+}
+
+.card-body {
+    padding: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+.card-body, .btn{
+    margin-top: auto !important;
+    padding-bottom: 1rem !important;
+}
+.item-link{
+    text-decoration: none !important;
+}
+
+.img-heart{
+    margin-top: 1rem !important;
+    float: right ;
+    font-size: 1.3em;
+    color: black;
+}
+
+/* Card effect */
+.card-img-overla{
+    opacity: 1;
+}
+
+.card-img-overla:hover{
+    opacity: 0.6 !important;
 }

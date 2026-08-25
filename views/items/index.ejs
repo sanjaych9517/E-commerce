@@ -1,14 +1,45 @@
 <% layout("/layouts/boilerplate") %>
-<body>
-    <h3>All Items</h3>
-    <!-- <form action="/items/new" method="GET">
+
+    <body>
+        <h3>All Items</h3>
+        <!-- <form action="/items/new" method="GET">
         <button>Add New Item</button>
     </form> -->
-    <ol>
-        <% for(let item of allItems){ %>
-            <li><a href="/items/<%= item._id %>">
-                <%= item.title %></a>
-            </li>
-            <% } %>
-    </ol>
-</body>
+
+        <!-- card start -->
+        <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 card-wrap">
+
+            <% for(let item of allItems){ %>
+
+                <div class="card" style="width: 17rem;">
+                    <a href="/items/<%= item._id %>" class="item-link">
+                        <div class="card-img-overla">
+                            <i class="fa-regular fa-heart img-heart"></i>
+                        <img src="<%= item.image %>" class="card-img-top" alt="item_image" style="height: 20rem;">
+                        
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <%= item.title %>
+                            </h5>
+                            <p class="card-text">
+
+                                <%= item.description %> <br>
+
+                                    ₹<%= item.price ? item.price.toLocaleString("en-IN") : "Price not available" %> <br>
+
+                                        <b><i>only</i>
+                                            <%= item.stock %> <i> items left</i>
+                                        </b>
+                            </p>
+                            <a href="/items/<%= item._id %>" class="btn btn-primary">Buy-now</a>
+                        </div>
+                        
+                    </a>
+                    </div>
+                </div>
+
+                <% } %>
+
+        </div>
+        <!-- card end -->
+    </body>
