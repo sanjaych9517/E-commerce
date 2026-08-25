@@ -116,6 +116,7 @@ body{
 }
 
 .btn-primary{
+    margin-top: 1.5rem !important;
     font-size: 1.3em !important;
 }
 /* Card effect */
@@ -162,3 +163,39 @@ body{
     color: #fe424d !important;
 }
 /* edit page  styling end*/
+
+/* styling start on show page */
+.show-img{
+    height: 30vh;
+}
+
+.show-card{
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.btns{
+    display: flex;
+   
+}
+.edit{
+  border-radius: 20px !important;
+  width: 10% !important;
+  padding: 10px 15px !important;
+  font-size: 1.3em;
+  margin-bottom: 20px !important;
+}
+.delete{
+    border-radius: 20px !important;
+    padding: 10px 25px !important;
+    font-size: 1.3em;
+}
+
+.edit:hover{
+ color: black !important;
+background-color: #fff !important;
+}
+.delete:hover{
+    
+    background-color: #fe424d !important;
+}
