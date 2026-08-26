@@ -11,51 +11,58 @@
           </label>
           <input name="item[title]" id="title" placeholder="Add Product Name" type="text" class="form-control"
             required />
+          <div class="valid-feedback"">Plese enter name your product</div>
         </div>
 
-        <div class="mb-3">
-          <label for="description" class="form-label">Description :
-          </label>
-          <textarea name="item[description]" id="description" class="form-control" required></textarea>
-        </div>
-
-        <div class="mb-3">
-          <label for="image" class="form-label">Image Link :
-          </label>
-          <input name="item[image]" id="image" placeholder="enter Image URL/Link" class="form-control" type="text" />
-        </div>
-
-        <div class="row">
-          <div class="mb-3 col-md-4">
-            <label for="price" class="form-label">Price :
+        <div class=" mb-3">
+            <label for="description" class="form-label">Description :
             </label>
-            <input name="item[price]" id="price" placeholder="17000" type="number" class="form-control" required />
+            <textarea name="item[description]" id="description" class="form-control" required></textarea>
+            <div class="invalid-feedback"">please enter a short description </div>
+        </div>
+
+        <div class=" mb-3">
+              <label for="image" class="form-label">Image Link :
+              </label>
+              <input name="item[image]" id="image" placeholder="enter Image URL/Link" class="form-control"
+                type="text" />
+            </div>
+
+            <div class="row">
+              <div class="mb-3 col-md-4">
+                <label for="price" class="form-label">Price
+                </label>
+                <input name="item[price]" id="price" placeholder="17000" class="form-control" required />
+                <div class="invalid-feedback"">Please enter a valid price</div>
           </div>
 
-          <div class="mb-3 col-md-8">
-            <label for="category" class="form-label">Category :
-            </label>
-            <input name="item[category]" id="category" placeholder="Category" type="text" class="form-control"
-              required />
+          <div class=" mb-3 col-md-8">
+                  <label for="category" class="form-label">Category :
+                  </label>
+                  <input name="item[category]" id="category" placeholder="Category" type="text" class="form-control"
+                    required />
+                  <div class="invalid-feedback"">Please Enter category of your Product</div>
           </div>
         </div>
 
-        <div class="row">
-          <div class="mb-3 col-md-4">
-            <label for="stock" class="form-label">No. of Stocks : </label>
-            <input name="item[stock]" id="stock" placeholder="19" type="number" class="form-control" required />
+        <div class=" row">
+                    <div class="mb-3 col-md-4">
+                      <label for="stock" class="form-label">No. of Stocks : </label>
+                      <input name="item[stock]" id="stock" placeholder="19" type="number" class="form-control" />
+                      <div class="invalid-feedback"">Please enter number of stock </div>
           </div>
 
-          <div class="mb-3 col-md-8">
-            <label for="brand" class="form-label">Brand : </label>
-            <input name="item[brand]" id="brand" placeholder="Apple, Samsung" type="text" class="form-control"
-              required />
+          <div class=" mb-3 col-md-8">
+                        <label for="brand" class="form-label">Brand : </label>
+                        <input name="item[brand]" id="brand" placeholder="Apple, Samsung" type="text"
+                          class="form-control" required />
+                        <div class="invalid-feedback""> please enter your product Brand</div>
           </div>
         </div>
 
         <br>
-        <button class="btn btn-dark add-btn">Add</button>
-        <br> <br>
+        <button class=" btn btn-dark add-btn">Add</button>
+                          <br> <br>
       </form>
     </div>
   </div>
