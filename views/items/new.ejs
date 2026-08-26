@@ -5,67 +5,51 @@
       <br><br>
       <h3>Add a New Item</h3>
 
-      <form action="/items" method="post">
+      <form action="/items" method="post" novalidate class="needs-validation">
         <div class="mb-3">
-          <label for="title" 
-          class="form-label">Title : 
-        </label>
-          <input name="item[title]" 
-          id="title"
-          placeholder="Add Product Name" type="text" class="form-control" />
-        </div>
-
-        <div class="mb-3">
-          <label for="description" class="form-label">Description :  
+          <label for="title" class="form-label">Title :
           </label>
-          <textarea name="item[description]" 
-          id="description"
-          class="form-control
-        type=" text">
-      </textarea>
+          <input name="item[title]" id="title" placeholder="Add Product Name" type="text" class="form-control"
+            required />
         </div>
 
         <div class="mb-3">
-          <label for="image" 
-          class="form-label">Image Link : 
-        </label>
-          <input name="item[image]" 
-          id="image"
-          placeholder="enter Image URL/Link" class="form-control" type="text" />
+          <label for="description" class="form-label">Description :
+          </label>
+          <textarea name="item[description]" id="description" class="form-control" required></textarea>
+        </div>
+
+        <div class="mb-3">
+          <label for="image" class="form-label">Image Link :
+          </label>
+          <input name="item[image]" id="image" placeholder="enter Image URL/Link" class="form-control" type="text" />
         </div>
 
         <div class="row">
           <div class="mb-3 col-md-4">
-            <label for="price" 
-            class="form-label">Price : 
-          </label>
-            <input name="item[price]" 
-            id="price"
-            placeholder="17000" type="number" class="form-control" />
+            <label for="price" class="form-label">Price :
+            </label>
+            <input name="item[price]" id="price" placeholder="17000" type="number" class="form-control" required />
           </div>
 
           <div class="mb-3 col-md-8">
-            <label for="category" class="form-label">Category : 
+            <label for="category" class="form-label">Category :
             </label>
-            <input name="item[category]"
-            id="category"
-             placeholder="Category" type="text" class="form-control" />
+            <input name="item[category]" id="category" placeholder="Category" type="text" class="form-control"
+              required />
           </div>
         </div>
 
         <div class="row">
           <div class="mb-3 col-md-4">
             <label for="stock" class="form-label">No. of Stocks : </label>
-            <input name="item[stock]" 
-            id="stock"
-            placeholder="19" type="number" class="form-control" />
+            <input name="item[stock]" id="stock" placeholder="19" type="number" class="form-control" required />
           </div>
 
           <div class="mb-3 col-md-8">
             <label for="brand" class="form-label">Brand : </label>
-            <input name="item[brand]" 
-            id="brand"
-            placeholder="Apple, Samsung" type="text" class="form-control" />
+            <input name="item[brand]" id="brand" placeholder="Apple, Samsung" type="text" class="form-control"
+              required />
           </div>
         </div>
 
