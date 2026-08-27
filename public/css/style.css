@@ -89,7 +89,7 @@ body{
 /* footer style end */
 
 /* card style start */
-.card {
+.item-card {
 
     /* border: none !important; */
     margin-bottom: 2.2rem;
@@ -152,12 +152,6 @@ body{
 
 /* new page  stylint start*/
 .add-btn{
-    /* background-color: #fe424d !important;
-     border: 2px solid black !important;
-    min-width: 15% !important;
-    font-size: 1.2em !important;
-    padding-top:5px !important;
-    border-radius: 25px !important; */
     background-color: #fe424d !important;
     border-radius: 20px !important;
   min-width: 10% !important;

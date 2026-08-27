@@ -7,8 +7,8 @@ const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const wrapAsync = require("./utils/wrapAsync.js");
 const ExpressError = require("./utils/ExpressError.js");
-const { itemSchema } = require("./schema.js");
-
+const { itemSchema, reviewSchema } = require("./schema.js");
+const Review = require("./models/review.js")
 
 const MONGO_URL = "mongodb://127.0.0.1:27017/Ecommerce";
 const PORT = 5001;
@@ -34,13 +34,23 @@ async function main() {
 app.get("/", (req, res) => {
     res.send("Hi I am a ROOT");
 });
-
+// validate listing for server side
 const validateItem = (req, res, next) => {
-    let {err} = itemSchema.validate(req.body);
-    if (err) {
+    let { error } = itemSchema.validate(req.body);
+    if (error) {
         let errMsg = error.details.map((el) => el.message).join(",");
         throw new ExpressError(400, errMsg);
-    }else{
+    } else {
+        next();
+    }
+}
+//  validate review for server side
+const validateReview = (req, res, next) => {
+    let { error } = reviewSchema.validate(req.body);
+    if (error) {
+        let errMsg = error.details.map((el) => el.message).join(",");
+        throw new ExpressError(400, errMsg);
+    } else {
         next();
     }
 }
@@ -72,7 +82,7 @@ app.get(
     validateItem,
     wrapAsync(async (req, res) => {
         let { id } = req.params;
-        const item = await Item.findById(id);
+        const item = await Item.findById(id).populate("reviews");
         res.render("items/show.ejs", { item });
     }
     )
@@ -82,7 +92,7 @@ app.get(
 // Create routes starts
 
 app.post(
-    "/items", 
+    "/items",
     validateItem,
     wrapAsync(
         async (req, res, next) => {
@@ -108,7 +118,7 @@ app.get(
 
 //  start update route
 app.put(
-    "/items/:id", 
+    "/items/:id",
     validateItem,
     wrapAsync(
         async (req, res) => {
@@ -137,9 +147,22 @@ app.delete(
 
 // review routes start
 // POST route
-// app.post("/item:id/reviews",async(req, res){
 
-// });
+app.post(
+    "/items/:id/reviews",
+    validateReview,
+    wrapAsync(
+        async (req, res) => {
+
+            let item = await Item.findById(req.params.id);
+            let newReview = new Review(req.body.review);
+
+            item.reviews.push(newReview);
+            await newReview.save();
+            await item.save();
+            res.redirect(`/items/${item._id}`);
+        })
+);
 
 
 

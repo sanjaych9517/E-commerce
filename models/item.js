@@ -16,7 +16,7 @@ const itemScheme = new Schema({
     category: String,
     brand: String,
     stock: Number,
-    review: [
+    reviews: [
         {
             type: Schema.Types.ObjectId,
             ref: "Review",

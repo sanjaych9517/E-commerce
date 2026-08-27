@@ -5,11 +5,18 @@ module.exports.itemSchema = Joi.object({
         {
             title: Joi.string().required(),
             description: Joi.string().required(),
-            price: Joi.number().min(0).required(),
+            price: Joi.number().required().min(0),
             category: Joi.string().required(),
-            stock: Joi.number().min(0).required(),
+            stock: Joi.number().required().min(0),
             brand: Joi.string().required(),
             image: Joi.string().allow("", null),
         }
     ).required()
+});
+
+module.exports.reviewSchema = Joi.object({
+  review: Joi.object({
+         rating: Joi.number().required().min(1).max(7),
+         comment: Joi.string().required(),
+  }).required(),
 });
