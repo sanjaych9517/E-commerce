@@ -11,7 +11,7 @@
           </label>
           <input name="item[title]" id="title" placeholder="Add Product Name" type="text" class="form-control"
             required />
-          <div class="valid-feedback"">Plese enter name your product</div>
+          <div class="invalid-feedback"">Plese enter name your product</div>
         </div>
 
         <div class=" mb-3">
@@ -32,9 +32,9 @@
               <div class="mb-3 col-md-4">
                 <label for="price" class="form-label">Price
                 </label>
-                <input name="item[price]" id="price" placeholder="17000" min="1"
+                <input name="item[price]" id="price" placeholder="17000" min="1" type="number"
                 class="form-control" required />
-                <div class="invalid-feedback"">Please enter a valid price</div>
+                <div class="invalid-feedback"">Price should be grater than 0</div>
           </div>
 
           <div class=" mb-3 col-md-8">
@@ -49,8 +49,9 @@
         <div class=" row">
                     <div class="mb-3 col-md-4">
                       <label for="stock" class="form-label">No. of Stocks : </label>
-                      <input name="item[stock]" id="stock" placeholder="enter number of stock" min="1"  class="form-control" required/>
-                      <div class="invalid-feedback"">Please enter number of stock </div>
+                      <input name="item[stock]" id="stock" placeholder="enter number of stock" min="1" type="number" class="form-control" required/>
+                      <div class="invalid-feedback"">
+                      stock should bg grater than 0 </div>
           </div>
 
           <div class=" mb-3 col-md-8">

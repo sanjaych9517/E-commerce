@@ -35,6 +35,16 @@ app.get("/", (req, res) => {
     res.send("Hi I am a ROOT");
 });
 
+const validateItem = (req, res, next) => {
+    let {err} = itemSchema.validate(req.body);
+    if (err) {
+        let errMsg = error.details.map((el) => el.message).join(",");
+        throw new ExpressError(400, errMsg);
+    }else{
+        next();
+    }
+}
+
 // index route start
 app.get(
     "/items",
@@ -59,15 +69,10 @@ app.get(
 //  show route start
 app.get(
     "/items/:id",
+    validateItem,
     wrapAsync(async (req, res) => {
         let { id } = req.params;
-        // if (!mongoose.Types.ObjectId.isValid(id)) {
-        //     throw new ExpressError(404, "Page Not Found");
-        // }
         const item = await Item.findById(id);
-        if (!item) {
-            throw new ExpressError(404, "Item Not Found");
-        }
         res.render("items/show.ejs", { item });
     }
     )
@@ -77,14 +82,10 @@ app.get(
 // Create routes starts
 
 app.post(
-    "/items",
+    "/items", 
+    validateItem,
     wrapAsync(
         async (req, res, next) => {
-            let result = itemSchema.validate(req.body);
-            console.log(result);
-            if(result.err){
-             throw new ExpressError(400, res.err);
-            }
             const newItem = new Item(req.body.item);
             await newItem.save();
             res.redirect("/items");
@@ -107,7 +108,8 @@ app.get(
 
 //  start update route
 app.put(
-    "/items/:id",
+    "/items/:id", 
+    validateItem,
     wrapAsync(
         async (req, res) => {
             if (!req.body.item) {
