@@ -7,6 +7,7 @@ const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const wrapAsync = require("./utils/wrapAsync.js");
 const ExpressError = require("./utils/ExpressError.js");
+const { itemSchema } = require("./schema.js");
 
 
 const MONGO_URL = "mongodb://127.0.0.1:27017/Ecommerce";
@@ -79,6 +80,11 @@ app.post(
     "/items",
     wrapAsync(
         async (req, res, next) => {
+            let result = itemSchema.validate(req.body);
+            console.log(result);
+            if(result.err){
+             throw new ExpressError(400, res.err);
+            }
             const newItem = new Item(req.body.item);
             await newItem.save();
             res.redirect("/items");
