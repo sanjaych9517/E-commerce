@@ -53,11 +53,15 @@ app.get("/items/:id", async (req, res) => {
 // show route end
 
 // Create routes starts
-app.post("/items", async (req, res) => {
+ try{
+    app.post("/items", async (req, res, next) => {
     const newItem = new Item(req.body.item);
     await newItem.save();
     res.redirect("/items");
 });
+ } catch(err){
+    next(err);
+ }
 // Create routes end
 
 // start edit route
@@ -101,6 +105,10 @@ app.put("/items/:id", async(req,res) => {
 //    console.log("sample was saved");
 //    res.send("successfully testing");
 // });
+
+app.use((err, req, res, next) => {
+ res.send("Something went wrong");
+});
 
 app.listen(PORT, () => {
     console.log(`server is listening on PORT http://localhost:${PORT}`)

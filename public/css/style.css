@@ -152,18 +152,28 @@ body{
 
 /* new page  stylint start*/
 .add-btn{
-    background-color: #fe424d !important;
+    /* background-color: #fe424d !important;
      border: 2px solid black !important;
     min-width: 15% !important;
     font-size: 1.2em !important;
     padding-top:5px !important;
-    border-radius: 25px !important;
+    border-radius: 25px !important; */
+    background-color: #fe424d !important;
+    border-radius: 20px !important;
+  min-width: 10% !important;
+  padding: 10px 15px !important;
+  font-size: 1.3em;
+  margin-bottom: 20px !important;
+  border: 1px solid #fff !important;
 }
 
 .add-btn:hover{
-    background-color: #fff !important;
-    border: 2px solid black !important;
-    color: #fe424d !important;
+    /* background-color: #fff !important;
+    border-radius: 2px solid #fe424d !important;
+    color: black !important; */
+     background-color: #fff !important;
+    border: 1px solid #fe424d !important;
+    color: black !important;
 }
 /* new page styling end */
 
@@ -182,6 +192,7 @@ body{
     background-color: #fff !important;
     border: 2px solid black !important;
     color: #fe424d !important;
+    
 }
 /* edit page  styling end*/
 
