@@ -60,9 +60,9 @@ app.get(
     "/items/:id",
     wrapAsync(async (req, res) => {
         let { id } = req.params;
-        if (!mongoose.Types.ObjectId.isValid(id)) {
-            throw new ExpressError(404, "Page Not Found");
-        }
+        // if (!mongoose.Types.ObjectId.isValid(id)) {
+        //     throw new ExpressError(404, "Page Not Found");
+        // }
         const item = await Item.findById(id);
         if (!item) {
             throw new ExpressError(404, "Item Not Found");
@@ -79,9 +79,6 @@ app.post(
     "/items",
     wrapAsync(
         async (req, res, next) => {
-            if(!req.body.item){
-                throw new ExpressError(400, "Send valid data for items");
-            }
             const newItem = new Item(req.body.item);
             await newItem.save();
             res.redirect("/items");
@@ -107,7 +104,7 @@ app.put(
     "/items/:id",
     wrapAsync(
         async (req, res) => {
-             if(!req.body.item){
+            if (!req.body.item) {
                 throw new ExpressError(400, "Send valid data for items");
             }
             let { id } = req.params;
@@ -153,17 +150,26 @@ app.delete(
 //    res.send("successfully testing");
 // });
 
+
+
 app.all("/{*splat}", (req, res, next) => {
     next(new ExpressError(404, "Page Not Found"));
 })
 
 app.use((err, req, res, next) => {
-    
-
     let { statusCode = 500, message = "Something went wrong" } = err;
+    res.status(statusCode).render("items/error.ejs", {
+        message
+    });
 
-    res.status(statusCode).send(message);
 });
+
+// app.use((err, req, res, next) => {
+//     let { statusCode = 500, message = "Something went wrong" } = err;
+//     res.render("error.ejs");
+//     // res.status(statusCode).send(message);
+// });
+
 
 
 
