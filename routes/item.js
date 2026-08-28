@@ -4,6 +4,7 @@ const wrapAsync = require("../utils/wrapAsync.js");
 const ExpressError = require("../utils/ExpressError.js");
 const { itemSchema } = require("../schema.js");
 const Item = require("../models/item.js");
+const mongoose = require("mongoose");
 
 // validate item 
 const validateItem = (req, res, next) => {
@@ -41,19 +42,28 @@ router.get(
 // end new route
 
 //  show route start
+
 router.get(
     "/:id",
-    validateItem,
     wrapAsync(async (req, res) => {
+
         let { id } = req.params;
-        const item = await Item.findById(id).populate("reviews");
-        if(!item){
-            req.flash("error","Product you request does not exist");
-            res.redirect("/items");
+
+        // Check valid ObjectId
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            req.flash("error", "Invalid item ID");
+            return res.redirect("/items");
         }
+
+        let item = await Item.findById(id).populate("reviews");
+
+        if (!item) {
+            req.flash("error", "Item you requested does not exist");
+            return res.redirect("/items");
+        }
+
         res.render("items/show.ejs", { item });
-    }
-    )
+    })
 );
 // show route end
 
@@ -81,6 +91,10 @@ router.get(
         async (req, res) => {
             let { id } = req.params;
             const item = await Item.findById(id);
+            if (!item) {
+            req.flash("error", "Item you requested does not exist");
+            return res.redirect("/items");
+        }
             res.render("items/edit.ejs", { item });
         })
 );
@@ -98,6 +112,7 @@ router.put(
             let { id } = req.params;
             await Item.findByIdAndUpdate(id, { ...req.body.item });
             req.flash("success", 'product Updated');
+            
             res.redirect(`/items/${id}`);
         })
 );
