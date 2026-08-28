@@ -8,6 +8,7 @@ router.get("/signup", (req, res) => {
     res.render("users/signup.ejs");
 });
 
+//  for signUp
 router.post("/signup",
     wrapAsync(
         async (req, res) => {
@@ -29,6 +30,7 @@ router.get("/login", (req, res) => {
     res.render("users/login.ejs");
 });
 
+// for login
 router.post(
     "/login",
     passport.authenticate("local", { failureRedirect: '/login', failureFlash: true }), 
@@ -37,5 +39,17 @@ router.post(
         res.redirect("/items");
     }
 );
+
+//  for logout
+
+router.get("/logout", (req, res, next) => {
+    req.logout((err) =>{
+        if(err) {
+            next(err);
+        }
+        req.flash("success", "you are logged out!");
+        res.redirect("/items");
+    })
+});
 
 module.exports = router;
