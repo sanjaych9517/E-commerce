@@ -11,8 +11,9 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user.js");
 
-const items = require("./routes/item.js");
-const reviews = require("./routes/review.js")
+const itemRouter = require("./routes/item.js");
+const reviewRouter = require("./routes/review.js");
+const userRouter = require("./routes/user.js");
 
 
 const MONGO_URL = "mongodb://127.0.0.1:27017/Ecommerce";
@@ -36,9 +37,6 @@ async function main() {
 }
 
 
-app.get("/", (req, res) => {
-    res.send("Hi I am a ROOT");
-});
 
 // cookies parser start
 
@@ -53,6 +51,10 @@ const sessionOptions = {
     },
 };
 
+app.get("/", (req, res) => {
+    res.send("Hi I am a ROOT");
+});
+
 app.use(session(sessionOptions));
 app.use(flash());
 
@@ -64,6 +66,13 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+// for flash message
+app.use((req, res, next) => {
+  res.locals.success = req.flash("success");
+  res.locals.error = req.flash("error");
+  next();
+});
+
 app.get("/demouser", async(req, res) => {
   let fakeUser = new User({
     email: "student@gmail.com",
@@ -73,15 +82,11 @@ app.get("/demouser", async(req, res) => {
  res.send(registeredUser);
 });
 
-// for flash message
-app.use((req, res, next) => {
-  res.locals.success = req.flash("success");
-  res.locals.error = req.flash("error");
-  next();
-});
 
-app.use("/items", items);
-app.use("/items/:id/:reviews", reviews);
+
+app.use("/items", itemRouter);
+app.use("/items/:id/:reviews", reviewRouter);
+app.use("/", userRouter)
 
 app.all("/{*splat}", (req, res, next) => {
     next(new ExpressError(404, "Page Not Found"));

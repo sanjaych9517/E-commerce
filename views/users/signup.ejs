@@ -1,0 +1,79 @@
+<% layout("/layouts/boilerplate") %>
+
+    <div class="container">
+        <div class="row justify-content-center mt-3 mt-md-5">
+            <div class="col-12 col-sm-10 col-md-8 col-lg-6">
+                <h1 class="text-center mb-4">
+                    SignUp for E-commerce
+                </h1>
+                <form action="/signup" method="POST" novalidate class="needs-validation">
+
+                    <!-- Username -->
+                    <div class="mb-3">
+                        <label for="username" class="form-label">
+                            Username:
+                        </label>
+
+                        <input name="username" id="username" type="text" class="form-control" required />
+
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+
+                        <div class="invalid-feedback">
+                            Please enter a username.
+                        </div>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="mb-3">
+                        <label for="email" class="form-label">
+                            Email:
+                        </label>
+
+                        <input name="email" id="email" type="email" class="form-control" required />
+
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+
+                        <div class="invalid-feedback">
+                            Please enter a valid email.
+                        </div>
+                    </div>
+
+                    <!-- Password -->
+                    <div class="mb-3">
+                        <label for="password" class="form-label">
+                            Password:
+                        </label>
+
+                        <input name="password" id="password" type="password" class="form-control" required />
+
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+
+                        <div class="invalid-feedback">
+                            Please enter a password.
+                        </div>
+                    </div>
+
+                    <!-- Signup Button -->
+                    <div class="d-grid d-sm-block">
+                        <button type="submit" class="btn btn-success">
+                            SignUp
+                        </button>
+                    </div>
+
+                    <!-- Login -->
+                    <div class="text-center text-sm-start mt-3">
+                        Already have an account?
+                        <a href="/login" class="text-decoration-none">
+                            Login
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
