@@ -7,6 +7,9 @@ const ejsMate = require("ejs-mate");
 const ExpressError = require("./utils/ExpressError.js");
 const session = require("express-session");
 const flash= require("connect-flash");
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
+const User = require("./models/user.js");
 
 const items = require("./routes/item.js");
 const reviews = require("./routes/review.js")
@@ -52,6 +55,23 @@ const sessionOptions = {
 
 app.use(session(sessionOptions));
 app.use(flash());
+
+// for password user schema in models
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+app.get("/demouser", async(req, res) => {
+  let fakeUser = new User({
+    email: "student@gmail.com",
+    username: "student",
+  });
+ let registeredUser = await User.register(fakeUser, "student@123");
+ res.send(registeredUser);
+});
 
 // for flash message
 app.use((req, res, next) => {
