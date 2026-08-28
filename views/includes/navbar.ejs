@@ -1,18 +1,19 @@
-<nav class="navbar navbar-expand-lg bg-body-light border-bottom sticky-top">
-  <div class="container-fluid">
-
+<nav
+  class="navbar navbar-expand-lg bg-white border-bottom sticky-top shadow-sm"
+>
+  <div class="container-fluid px-3 px-lg-4">
     <!-- Logo -->
-    <a class="navbar-brand" href="/">
-      <i class="fa-brands fa-shopware"></i>
+    <a class="navbar-brand fw-bold fs-3 me-lg-4" href="/">
+      <i class="fa-brands fa-shopware text-danger"></i>
     </a>
 
-    <!-- Toggle Button -->
+    <!-- Mobile Toggle -->
     <button
       class="navbar-toggler"
       type="button"
       data-bs-toggle="collapse"
-      data-bs-target="#navbarNavAltMarkup"
-      aria-controls="navbarNavAltMarkup"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
       aria-expanded="false"
       aria-label="Toggle navigation"
     >
@@ -20,63 +21,188 @@
     </button>
 
     <!-- Navbar Content -->
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <!-- Left Section -->
+      <ul class="navbar-nav align-items-lg-center gap-lg-2">
+        <!-- Home -->
+        <li class="nav-item">
+          <a class="nav-link px-3 fs-4" href="/" title="Home">
+            <i class="fa-solid fa-house"></i>
+          </a>
+        </li>
 
-      <div class="navbar-nav w-100 align-items-lg-center">
+        <!-- Shop -->
+        <li class="nav-item">
+          <a class="nav-link px-3 fs-4" href="/items" title="Shop">
+            <i class="fa-solid fa-store"></i>
+          </a>
+        </li>
 
-        <!-- Left Links -->
-        <a class="nav-link" href="/">
-          <i class="fa-solid fa-house"></i> Home
-        </a>
+        <!-- Add Item -->
+        <li class="nav-item">
+          <a class="nav-link px-3 fs-4" href="/items/new" title="Add Item">
+            <i class="fa-solid fa-plus"></i>
+          </a>
+        </li>
 
-        <a class="nav-link" href="/items">
-          Shop
-        </a>
-
-        <a class="nav-link" href="/items/new">
-          Add New Item
-        </a>
-
-        <a class="nav-link" href="#">
-          Categories
-        </a>
-
-        <!-- Right Section -->
-        <div class="ms-lg-auto d-flex flex-column flex-lg-row align-items-lg-center">
-
-          <!-- Search -->
-          <form
-            class="d-flex w-100 w-lg-auto my-2 my-lg-0 me-lg-2"
-            action=""
+        <!-- Categories -->
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle px-3 fs-5 fw-semibold"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
           >
-            <input
-              type="text"
-              id="search"
-              class="form-control"
-              placeholder="Search"
-            >
-          </form>
+            Categories
+          </a>
 
-          <!-- Icons -->
-          <div class="d-flex justify-content-start justify-content-lg-center">
+          <ul class="dropdown-menu shadow-sm border-0">
+            <li>
+              <a class="dropdown-item py-2" href="/items?category=electronics">
+                <i class="fa-solid fa-mobile-screen me-2"></i>
+                Electronics
+              </a>
+            </li>
 
-            <a class="nav-link px-2" href="#">
-              <i class="fa-regular fa-heart"></i>
-            </a>
+            <li>
+              <a class="dropdown-item py-2" href="/items?category=clothing">
+                <i class="fa-solid fa-shirt me-2"></i>
+                Clothing
+              </a>
+            </li>
 
-            <a class="nav-link px-2" href="#">
-              <i class="fa-solid fa-cart-shopping"></i>
-            </a>
+            <li>
+              <a class="dropdown-item py-2" href="/items?category=shoes">
+                <i class="fa-solid fa-shoe-prints me-2"></i>
+                Shoes
+              </a>
+            </li>
 
-            <a class="nav-link px-2" href="/signup">
-              <i class="fa-solid fa-user"></i>
-            </a>
+            <li>
+              <a class="dropdown-item py-2" href="/items?category=accessories">
+                <i class="fa-solid fa-gem me-2"></i>
+                Accessories
+              </a>
+            </li>
 
-          </div>
+            <li>
+              <hr class="dropdown-divider" />
+            </li>
 
+            <li>
+              <a class="dropdown-item py-2 fw-semibold" href="/items">
+                View All Products
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+
+      <!-- Search Section -->
+      <form
+        class="d-flex align-items-center mx-lg-auto my-3 my-lg-0 w-100 w-lg-auto"
+        action="/items"
+        method="GET"
+      >
+        <label for="search" class="fw-semibold me-2 mb-0 text-nowrap">
+          Search:
+        </label>
+
+        <div class="input-group">
+          <input
+            type="search"
+            id="search"
+            name="search"
+            class="form-control"
+            placeholder="Search products..."
+            autocomplete="off"
+          />
+
+          <button class="btn btn-dark" type="submit" title="Search">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
         </div>
+      </form>
 
-      </div>
+      <!-- Right Section -->
+      <ul class="navbar-nav align-items-lg-center gap-lg-2 ms-lg-3">
+        <!-- Wishlist -->
+        <li class="nav-item">
+          <a class="nav-link px-3 fs-4" href="/wishlist" title="Wishlist">
+            <i class="fa-regular fa-heart"></i>
+          </a>
+        </li>
+
+        <!-- Cart -->
+        <li class="nav-item">
+          <a class="nav-link px-3 fs-4" href="/cart" title="Cart">
+            <i class="fa-solid fa-cart-shopping"></i>
+          </a>
+        </li>
+
+        <!-- Orders -->
+        <li class="nav-item">
+          <a class="nav-link px-3 fs-4" href="/orders" title="Orders">
+            <i class="fa-solid fa-box"></i>
+          </a>
+        </li>
+
+        <!-- Account -->
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle px-3 fs-4"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+            title="Account"
+          >
+            <i class="fa-solid fa-user"></i>
+          </a>
+
+          <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0">
+            <li>
+              <a class="dropdown-item py-2" href="/profile">
+                <i class="fa-solid fa-user me-2"></i>
+                My Profile
+              </a>
+            </li>
+
+            <li>
+              <a class="dropdown-item py-2" href="/orders">
+                <i class="fa-solid fa-box me-2"></i>
+                My Orders
+              </a>
+            </li>
+
+            <li>
+              <a class="dropdown-item py-2" href="/wishlist">
+                <i class="fa-regular fa-heart me-2"></i>
+                Wishlist
+              </a>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider" />
+            </li>
+
+            <li>
+              <a class="dropdown-item py-2" href="/login">
+                <i class="fa-solid fa-right-to-bracket me-2"></i>
+                Login
+              </a>
+            </li>
+
+            <li>
+              <a class="dropdown-item py-2" href="/signup">
+                <i class="fa-solid fa-user-plus me-2"></i>
+                Sign Up
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
     </div>
   </div>
 </nav>
