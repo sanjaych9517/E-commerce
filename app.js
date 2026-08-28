@@ -10,6 +10,8 @@ const ExpressError = require("./utils/ExpressError.js");
 const { itemSchema, reviewSchema } = require("./schema.js");
 const Review = require("./models/review.js");
 
+const items = require("./routes/item.js");
+
 
 const MONGO_URL = "mongodb://127.0.0.1:27017/Ecommerce";
 const PORT = 5001;
@@ -35,16 +37,9 @@ async function main() {
 app.get("/", (req, res) => {
     res.send("Hi I am a ROOT");
 });
-// validate listing for server side
-const validateItem = (req, res, next) => {
-    let { error } = itemSchema.validate(req.body);
-    if (error) {
-        let errMsg = error.details.map((el) => el.message).join(",");
-        throw new ExpressError(400, errMsg);
-    } else {
-        next();
-    }
-}
+
+
+
 //  validate review for server side
 const validateReview = (req, res, next) => {
     let { error } = reviewSchema.validate(req.body);
@@ -55,96 +50,8 @@ const validateReview = (req, res, next) => {
         next();
     }
 }
-
-// index route start
-app.get(
-    "/items",
-    wrapAsync(
-        async (req, res) => {
-            const allItems = await Item.find({});
-            res.render("items/index.ejs", { allItems });
-        })
-);
-// index route end
-
-// start new route
-app.get(
-    "/items/new",
-    wrapAsync(
-        async (req, res) => {
-            res.render("items/new.ejs");
-        })
-);
-// end new route
-
-//  show route start
-app.get(
-    "/items/:id",
-    validateItem,
-    wrapAsync(async (req, res) => {
-        let { id } = req.params;
-        const item = await Item.findById(id).populate("reviews");
-        res.render("items/show.ejs", { item });
-    }
-    )
-);
-// show route end
-
-// Create routes starts
-
-app.post(
-    "/items",
-    validateItem,
-    wrapAsync(
-        async (req, res, next) => {
-            const newItem = new Item(req.body.item);
-            await newItem.save();
-            res.redirect("/items");
-        })
-);
-
-// Create routes end
-
-// start edit route
-app.get(
-    "/items/:id/edit",
-    wrapAsync(
-        async (req, res) => {
-            let { id } = req.params;
-            const item = await Item.findById(id);
-            res.render("items/edit.ejs", { item });
-        })
-);
-// end edit routes
-
-//  start update route
-app.put(
-    "/items/:id",
-    validateItem,
-    wrapAsync(
-        async (req, res) => {
-            if (!req.body.item) {
-                throw new ExpressError(400, "Send valid data for items");
-            }
-            let { id } = req.params;
-            await Item.findByIdAndUpdate(id, { ...req.body.item });
-            res.redirect(`/items/${id}`);
-        })
-);
-// end update route
-
-// start delete routes
-app.delete(
-    "/items/:id",
-    wrapAsync(
-        async (req, res) => {
-            let { id } = req.params;
-            let deletedItem = await Item.findByIdAndDelete(id);
-            console.log(deletedItem);
-            res.redirect("/items");
-        })
-);
-// end delete routes
+ 
+app.use("/items", items);
 
 // review routes start
 // POST route
