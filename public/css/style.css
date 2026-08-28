@@ -12,81 +12,25 @@ body{
 }
 
 /* navbar */
-.navbar {
+/* .navbar {
     height: 5rem;
     background-color: white;
     font-size: 1.4em;
     
-}
+} */
 
-.fa-shopware {
+/* .fa-shopware {
     color: #fe424d;
     font-size: 2rem;
-}
+} */
 
 .nav-link {
     color: #222222 !important;
 }
 
-.icon {
-    display: flex;
-    justify-content: flex-end;
-}
-/* search in nab bar */
 
-
-/* for mobile screen ke liya navbar */
-@media (max-width: 768px) {
-  .navbar-collapse {
-    background-color: white;
-  }
-
-  .navbar-nav {
-    width: 100%;
-  }
-
-  .navbar-nav .icon {
-    flex-wrap: wrap !important;
-    display: flex;
-    
-  }
-}
-/* nab bar end for mobile screen ke liya */
 
 /* footer */
-.f-info-links a {
-    text-decoration: none;
-    color: #222222;
-}
-
-.f-info-links a:hover {
-    text-decoration: underline;
-}
-
-.f-info-links,
-.f-info-socials,
-.f-info-brand {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.f-info-socials i {
-    font-size: 1.3rem;
-    margin-right: 1rem;
-}
-
-.f-info {
-    height: 8rem;
-    background-color: #ebebeb;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: space-evenly;
-    text-align: center;
-}
-
 /* footer style end */
 
 /* card style start */
@@ -95,6 +39,7 @@ body{
     /* border: none !important; */
     margin-bottom: 2.2rem;
     height: 100% !important;
+    
 }
 
 .card:hover{
