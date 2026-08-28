@@ -5,6 +5,7 @@ const ExpressError = require("../utils/ExpressError.js");
 const { itemSchema } = require("../schema.js");
 const Item = require("../models/item.js");
 const mongoose = require("mongoose");
+const {isLoggedIn} = require("../middleware.js")
 
 // validate item 
 const validateItem = (req, res, next) => {
@@ -33,9 +34,10 @@ router.get(
 
 // start new route
 router.get(
-    "/new",
+    "/new",isLoggedIn,
     wrapAsync(
         async (req, res) => {
+            
             res.render("items/new.ejs");
         })
 );
@@ -71,9 +73,9 @@ router.get(
 // Create routes starts
 
 router.post(
-    "/",
+    "/",isLoggedIn,
     validateItem,
-    wrapAsync(
+    wrapAsync( 
         async (req, res, next) => {
             const newItem = new Item(req.body.item);
             await newItem.save();
@@ -87,6 +89,7 @@ router.post(
 // start edit route
 router.get(
     "/:id/edit",
+    isLoggedIn,
     wrapAsync(
         async (req, res) => {
             let { id } = req.params;
@@ -103,6 +106,7 @@ router.get(
 //  start update route
 router.put(
     "/:id",
+    isLoggedIn,
     validateItem,
     wrapAsync(
         async (req, res) => {
@@ -121,6 +125,7 @@ router.put(
 // start delete routes
 router.delete(
     "/:id",
+    isLoggedIn,
     wrapAsync(
         async (req, res) => {
             let { id } = req.params;
