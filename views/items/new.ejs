@@ -1,70 +1,133 @@
 <% layout("/layouts/boilerplate") %>
 
-  <div class="row">
-    <div class="col-8 offset-2">
-      <br><br>
-      <h3>Add a New Item</h3>
+<div class="container">
+  <div class="row justify-content-center mt-3 mt-md-5">
+    <div class="col-12 col-sm-10 col-md-9 col-lg-7">
+      <h3 class="text-center mb-4">Add a New Item</h3>
 
       <form action="/items" method="post" novalidate class="needs-validation">
+        <!-- Title -->
         <div class="mb-3">
-          <label for="title" class="form-label">Title :
-          </label>
-          <input name="item[title]" id="title" placeholder="Add Product Name" type="text" class="form-control"
-            required />
-          <div class="invalid-feedback"">Plese enter name your product</div>
+          <label for="title" class="form-label"> Title: </label>
+
+          <input
+            name="item[title]"
+            id="title"
+            placeholder="Add Product Name"
+            type="text"
+            class="form-control"
+            required
+          />
+
+          <div class="invalid-feedback">
+            Please enter the name of your product.
+          </div>
         </div>
 
-        <div class=" mb-3">
-            <label for="description" class="form-label">Description :
-            </label>
-            <textarea name="item[description]" id="description" class="form-control" required></textarea>
-            <div class="invalid-feedback"">please enter a short description </div>
+        <!-- Description -->
+        <div class="mb-3">
+          <label for="description" class="form-label"> Description: </label>
+
+          <textarea
+            name="item[description]"
+            id="description"
+            class="form-control"
+            rows="4"
+            placeholder="Enter a short description"
+            required
+          ></textarea>
+
+          <div class="invalid-feedback">Please enter a short description.</div>
         </div>
 
-        <div class=" mb-3">
-              <label for="image" class="form-label">Image Link :
-              </label>
-              <input name="item[image]" id="image" placeholder="enter Image URL/Link" class="form-control"
-                type="text" />
+        <!-- Image -->
+        <div class="mb-3">
+          <label for="image" class="form-label"> Image Link: </label>
+
+          <input
+            name="item[image]"
+            id="image"
+            placeholder="Enter Image URL/Link"
+            class="form-control"
+            type="url"
+          />
+        </div>
+
+        <!-- Price + Category -->
+        <div class="row">
+          <div class="mb-3 col-12 col-sm-5">
+            <label for="price" class="form-label"> Price: </label>
+
+            <input
+              name="item[price]"
+              id="price"
+              placeholder="17000"
+              min="1"
+              type="number"
+              class="form-control"
+              required
+            />
+
+            <div class="invalid-feedback">Price should be greater than 0.</div>
+          </div>
+
+          <div class="mb-3 col-12 col-sm-7">
+            <label for="category" class="form-label"> Category: </label>
+
+            <input
+              name="item[category]"
+              id="category"
+              placeholder="Category"
+              type="text"
+              class="form-control"
+              required
+            />
+
+            <div class="invalid-feedback">
+              Please enter the category of your product.
             </div>
-
-            <div class="row">
-              <div class="mb-3 col-md-4">
-                <label for="price" class="form-label">Price
-                </label>
-                <input name="item[price]" id="price" placeholder="17000" min="1" type="number"
-                class="form-control" required />
-                <div class="invalid-feedback"">Price should be grater than 0</div>
-          </div>
-
-          <div class=" mb-3 col-md-8">
-                  <label for="category" class="form-label">Category :
-                  </label>
-                  <input name="item[category]" id="category" placeholder="Category" type="text" class="form-control"
-                    required />
-                  <div class="invalid-feedback"">Please Enter category of your Product</div>
           </div>
         </div>
 
-        <div class=" row">
-                    <div class="mb-3 col-md-4">
-                      <label for="stock" class="form-label">No. of Stocks : </label>
-                      <input name="item[stock]" id="stock" placeholder="enter number of stock" min="1" type="number" class="form-control" required/>
-                      <div class="invalid-feedback"">
-                      stock should bg grater than 0 </div>
+        <!-- Stock + Brand -->
+        <div class="row">
+          <div class="mb-3 col-12 col-sm-5">
+            <label for="stock" class="form-label"> No. of Stocks: </label>
+
+            <input
+              name="item[stock]"
+              id="stock"
+              placeholder="Enter number of stock"
+              min="1"
+              type="number"
+              class="form-control"
+              required
+            />
+
+            <div class="invalid-feedback">Stock should be greater than 0.</div>
           </div>
 
-          <div class=" mb-3 col-md-8">
-                        <label for="brand" class="form-label">Brand : </label>
-                        <input name="item[brand]" id="brand" placeholder="Apple, Samsung" type="text"
-                          class="form-control" required />
-                        <div class="invalid-feedback""> please enter your product Brand</div>
+          <div class="mb-3 col-12 col-sm-7">
+            <label for="brand" class="form-label"> Brand: </label>
+
+            <input
+              name="item[brand]"
+              id="brand"
+              placeholder="Apple, Samsung"
+              type="text"
+              class="form-control"
+              required
+            />
+
+            <div class="invalid-feedback">Please enter your product brand.</div>
           </div>
         </div>
 
-        <br>
-        <button class=" btn btn-dark add-btn">Add</button>
-                          <br> <br>
+        <!-- Add Button -->
+        <div class="d-grid d-sm-block mt-3 mb-4">
+          <button type="submit" class="btn btn-dark">Add</button>
+        </div>
       </form>
     </div>
   </div>
+</div>
