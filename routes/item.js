@@ -47,6 +47,10 @@ router.get(
     wrapAsync(async (req, res) => {
         let { id } = req.params;
         const item = await Item.findById(id).populate("reviews");
+        if(!item){
+            req.flash("error","Product you request does not exist");
+            res.redirect("/items");
+        }
         res.render("items/show.ejs", { item });
     }
     )
@@ -63,6 +67,7 @@ router.post(
         async (req, res, next) => {
             const newItem = new Item(req.body.item);
             await newItem.save();
+            req.flash("success", "New Product Added!");
             res.redirect("/items");
         })
 );
@@ -92,6 +97,7 @@ router.put(
             }
             let { id } = req.params;
             await Item.findByIdAndUpdate(id, { ...req.body.item });
+            req.flash("success", 'product Updated');
             res.redirect(`/items/${id}`);
         })
 );
@@ -104,7 +110,7 @@ router.delete(
         async (req, res) => {
             let { id } = req.params;
             let deletedItem = await Item.findByIdAndDelete(id);
-            console.log(deletedItem);
+            req.flash("success", 'Product Deleted');
             res.redirect("/items");
         })
 );
