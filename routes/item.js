@@ -2,22 +2,22 @@ const express = require('express');
 const router = express.Router();
 const wrapAsync = require("../utils/wrapAsync.js");
 const ExpressError = require("../utils/ExpressError.js");
-const { itemSchema, reviewSchema } = require("../schema.js");
+const { itemSchema } = require("../schema.js");
 const Item = require("../models/item.js");
 
-
-
-
-// validate listing for server side
+// validate item 
 const validateItem = (req, res, next) => {
     let { error } = itemSchema.validate(req.body);
+
     if (error) {
         let errMsg = error.details.map((el) => el.message).join(",");
         throw new ExpressError(400, errMsg);
     } else {
         next();
     }
-}
+};
+
+
 
 // index route start
 router.get(
