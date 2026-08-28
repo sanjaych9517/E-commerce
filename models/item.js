@@ -1,16 +1,17 @@
-const mongoose= require('mongoose');
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const Review = require("./review.js");
 
-const itemScheme = new Schema({
+const itemSchema = new Schema({
     title: {
-       type: String,
-       required: true,
+        type: String,
+        required: true,
     },
     description: String,
     image: {
         default: "https://m.media-amazon.com/images/I/71TjL3zBQQL._SX679_.jpg",
-        type:String,
-        set: (v) => v ==="" ? "https://m.media-amazon.com/images/I/71TjL3zBQQL._SX679_.jpg" : v,
+        type: String,
+        set: (v) => v === "" ? "https://m.media-amazon.com/images/I/71TjL3zBQQL._SX679_.jpg" : v,
     },
     price: Number,
     category: String,
@@ -24,6 +25,12 @@ const itemScheme = new Schema({
     ],
 });
 
-const Item = mongoose.model("Item",itemScheme);
+itemSchema.post("findOneAndDelete", async (item) => {
+    if (item) {
+        await Review.deleteMany({ _id: { $in: item.reviews } });
+    }
+});
+
+const Item = mongoose.model("Item", itemSchema);
 
 module.exports = Item;

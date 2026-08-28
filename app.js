@@ -8,7 +8,8 @@ const ejsMate = require("ejs-mate");
 const wrapAsync = require("./utils/wrapAsync.js");
 const ExpressError = require("./utils/ExpressError.js");
 const { itemSchema, reviewSchema } = require("./schema.js");
-const Review = require("./models/review.js")
+const Review = require("./models/review.js");
+
 
 const MONGO_URL = "mongodb://127.0.0.1:27017/Ecommerce";
 const PORT = 5001;
@@ -164,6 +165,18 @@ app.post(
         })
 );
 
+// delete review routes
+app.delete("/items/:id/reviews/:reviewId",
+     wrapAsync(
+          async(req, res) =>{
+           let {id, reviewId}  = req.params;
+           await Item.findByIdAndUpdate(id, {$pull: {reviews: reviewId}});
+         await  Review.findByIdAndDelete(reviewId);
+
+         res.redirect(`/items/${id}`)
+          }
+));
+// review routes end
 
 
 // app.get("/textItem", async (req, res) =>{
