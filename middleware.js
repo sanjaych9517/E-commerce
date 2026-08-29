@@ -1,4 +1,5 @@
 const Item = require("./models/item");
+const Review = require("./models/review.js");
 const ExpressError = require("./utils/ExpressError.js");
 const { itemSchema, reviewSchema } = require("./schema.js");
 
@@ -27,6 +28,7 @@ module.exports.saveRedirectUrl = (req, res, next) => {
     next();
 };
 
+//  for owner
 module.exports.isOwner = async (req, res, next) => {
     let { id } = req.params;
     let item = await Item.findById(id);
@@ -37,6 +39,25 @@ module.exports.isOwner = async (req, res, next) => {
     next();
 };
 
+module.exports.isReviewAuthorOrOwner = async (req, res, next) => {
+    let { id, reviewId } = req.params;
+
+    let item = await Item.findById(id);
+    let review = await Review.findById(reviewId);
+
+    let isOwner = item.owner._id.equals(res.locals.currentUser._id);
+    let isReviewAuthor = review.author.equals(res.locals.currentUser._id);
+
+    if (!isOwner && !isReviewAuthor) {
+        req.flash(
+            "error",
+            "You don't have permission to delete this review."
+        );
+        return res.redirect(`/items/${id}`);
+    }
+
+    next();
+};
 
 //  validate items
 module.exports.validateItem = (req, res, next) => {
