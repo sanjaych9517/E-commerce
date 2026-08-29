@@ -10,7 +10,7 @@ module.exports.isLoggedIn = (req, res, next) => {
         // Login se pehle user jis URL par jana chahta tha, use save karo
         req.session.redirectUrl = req.originalUrl;
 
-        req.flash("error", "You must be logged in to add product");
+        req.flash("error", "You must be logged in!");
 
         return res.redirect("/login");
     }
