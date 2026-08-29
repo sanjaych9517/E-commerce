@@ -30,11 +30,13 @@
         </li>
 
         <!-- Add Item -->
+         <% if(currentUser) { %>
         <li class="nav-item">
           <a class="nav-link px-3 fs-4" href="/items/new" title="Add Item">
             <i class="fa-solid fa-plus"></i>
           </a>
         </li>
+        <% } %>
 
         <!-- Categories -->
         <li class="nav-item dropdown">
@@ -132,12 +134,15 @@
           </a>
 
           <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0">
+            <!-- for user profile -->
+            <% if(currentUser) { %>
             <li>
               <a class="dropdown-item py-2" href="/profile">
                 <i class="fa-solid fa-user me-2"></i>
                 My Profile
               </a>
             </li>
+            <% } %>
 
             <li>
               <a class="dropdown-item py-2" href="/orders">
