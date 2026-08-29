@@ -11,8 +11,15 @@ module.exports.signup = async (req, res) => {
         const newUser = new User({ email, username });
         const registeredUser = await User.register(newUser, password);
         console.log(registeredUser);
-        req.flash("success", "welcome to our website");
-        res.redirect("/items");
+
+        // Signup ke baad automatically login
+        req.login(registeredUser, (err) => {
+            if (err) {
+                return next(err);
+            }
+            req.flash("success", "welcome to our website");
+            res.redirect("/items");
+        });
     } catch (err) {
         req.flash("error", err.message);
         res.redirect("/signup");

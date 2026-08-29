@@ -4,42 +4,29 @@ const wrapAsync = require("../utils/wrapAsync.js");
 const Item = require("../models/item.js");
 const { isLoggedIn, isOwner, validateItem, validateReview } = require("../middleware.js")
 
-
 const itemController = require("../controllers/item.js")
 
-// index route start
-router.get("/", wrapAsync(itemController.index));
+router
+    .route("/",)
+    .get(wrapAsync(itemController.index))
+    .post(isLoggedIn, validateItem,
+        wrapAsync(itemController.createItem));
 
 // start new route
-router.get(
-    "/new", isLoggedIn,
+router.get("/new", isLoggedIn,
     wrapAsync(itemController.renderNewForm));
 
-//  show route start
-
-router.get(
-    "/:id", wrapAsync(itemController.showItem));
-
-// Create routes starts
-router.post(
-    "/", isLoggedIn, validateItem,
-    wrapAsync(itemController.createItem));
+router
+    .route("/:id")
+    .get(wrapAsync(itemController.showItem))
+    .put(isLoggedIn, isOwner, validateItem,
+        wrapAsync(itemController.updateItem))
+    .delete(isOwner, isLoggedIn,
+        wrapAsync(itemController.destroyItem));
 
 // start edit route
 router.get(
-    "/:id/edit",isOwner, isLoggedIn,
+    "/:id/edit", isOwner, isLoggedIn,
     wrapAsync(itemController.renderEditForm));
-
-//  start update route
-router.put(
-    "/:id", isLoggedIn,isOwner,validateItem,
-    wrapAsync(itemController.updateItem));
-
-
-// start delete routes
-router.delete(
-    "/:id",isOwner,isLoggedIn,
-    wrapAsync(itemController.destroyItem));
-
 
 module.exports = router;
