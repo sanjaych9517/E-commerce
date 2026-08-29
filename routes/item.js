@@ -1,25 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const wrapAsync = require("../utils/wrapAsync.js");
-const ExpressError = require("../utils/ExpressError.js");
-const { itemSchema } = require("../schema.js");
+
 const Item = require("../models/item.js");
 const mongoose = require("mongoose");
-const { isLoggedIn } = require("../middleware.js")
-
-// validate item 
-const validateItem = (req, res, next) => {
-    let { error } = itemSchema.validate(req.body);
-
-    if (error) {
-        let errMsg = error.details.map((el) => el.message).join(",");
-        throw new ExpressError(400, errMsg);
-    } else {
-        next();
-    }
-};
-
-
+const { isLoggedIn, isOwner, validateItem, validateReview } = require("../middleware.js")
 
 // index route start
 router.get(
@@ -96,6 +81,7 @@ router.post(
 // start edit route
 router.get(
     "/:id/edit",
+    isOwner,
     isLoggedIn,
     wrapAsync(
         async (req, res) => {
@@ -114,6 +100,7 @@ router.get(
 router.put(
     "/:id",
     isLoggedIn,
+    isOwner,
     validateItem,
     wrapAsync(
         async (req, res) => {
@@ -121,6 +108,7 @@ router.put(
                 throw new ExpressError(400, "Send valid data for items");
             }
             let { id } = req.params;
+    
             await Item.findByIdAndUpdate(id, { ...req.body.item });
             req.flash("success", 'product Updated');
 
@@ -132,6 +120,7 @@ router.put(
 // start delete routes
 router.delete(
     "/:id",
+    isOwner,
     isLoggedIn,
     wrapAsync(
         async (req, res) => {
