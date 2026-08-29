@@ -45,7 +45,13 @@ router.get(
         }
 
         let item = await Item.findById(id)
-        .populate("reviews")
+        .populate({
+            path: "reviews",
+            populate: {
+                path: "author",
+            },
+            
+         })
         .populate("owner");
 
         if (!item) {

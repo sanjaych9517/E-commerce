@@ -21,6 +21,8 @@ router.post(
             let item = await Item.findById(req.params.id);
             let newReview = new Review(req.body.review);
 
+            // Logged-in user ko review ka author 
+            newReview.author = req.user._id;
             item.reviews.push(newReview);
             await newReview.save();
             await item.save();
