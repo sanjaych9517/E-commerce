@@ -6,7 +6,7 @@
         <%= item.title %>
       </h3>
     </div>
-    <div class="card col-6 offset-3 show-card listing-card ">
+    <div class="card col-8 offset-2 show-card listing-card ">
       <img src="<%= item.image %>" class="card-img-top show-img mt-4" alt="item_image" />
       <div class="card-body">
         <p class="card-text">
@@ -44,7 +44,7 @@
       </div>
       <% } %>
         <!-- for review  -->
-        <div class="col-8 offset-2 mt-4 mb-2">
+        <div class="col-8 offset-2 mt-2 mb-2">
           <hr>
           <h4>Leave a review</h4>
           <!-- for rating -->
@@ -55,23 +55,23 @@
             </div>
 
             <!-- for comment -->
-            <div>
-              <div class="mb-3 mt-3">
-                <label for="comment" class="form-label">Comments : </label>
-                <textarea id="commment" cols="20" rows="3" name="review[comment]" class="form-control"
-                  required></textarea>
-                <div class="invalid-feedback">please add some comment for review</div>
-              </div>
-              <button class=" btn btn-dark add-btn " type="submit">Add Review</button>
+
+            <div class="mb-3 mt-3">
+              <label for="comment" class="form-label">Comments : </label>
+              <textarea id="commment" cols="20" rows="3" name="review[comment]" class="form-control"
+                required></textarea>
+              <div class="invalid-feedback">please add some comment for review</div>
             </div>
+            <button class=" btn btn-dark add-btn " type="submit">Add Review</button>
+
           </form>
 
         </div>
         <!-- for seew comment -->
-        <hr>
-        <p><b>All Review</b></p>
 
-        <div class="row justify-content-center">
+        <div class="row justify-content-center col-8 offset-2">
+          <hr>
+          <p><b>All Review</b></p>
           <% for(review of item.reviews) { %>
             <div class="card col-11 col-sm-10 col-md-5 mx-2 mb-4 p-0">
 
