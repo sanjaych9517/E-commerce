@@ -5,7 +5,7 @@ const ExpressError = require("../utils/ExpressError.js");
 const { itemSchema } = require("../schema.js");
 const Item = require("../models/item.js");
 const mongoose = require("mongoose");
-const {isLoggedIn} = require("../middleware.js")
+const { isLoggedIn } = require("../middleware.js")
 
 // validate item 
 const validateItem = (req, res, next) => {
@@ -34,10 +34,10 @@ router.get(
 
 // start new route
 router.get(
-    "/new",isLoggedIn,
+    "/new", isLoggedIn,
     wrapAsync(
         async (req, res) => {
-            
+
             res.render("items/new.ejs");
         })
 );
@@ -51,19 +51,23 @@ router.get(
 
         let { id } = req.params;
 
+        console.log("Received ID:", id);
+
         // Check valid ObjectId
         if (!mongoose.Types.ObjectId.isValid(id)) {
             req.flash("error", "Invalid item ID");
             return res.redirect("/items");
         }
 
-        let item = await Item.findById(id).populate("reviews");
+        let item = await Item.findById(id)
+        .populate("reviews")
+        .populate("owner");
 
         if (!item) {
             req.flash("error", "Item you requested does not exist");
             return res.redirect("/items");
         }
-
+         console.log(item);
         res.render("items/show.ejs", { item });
     })
 );
@@ -73,11 +77,14 @@ router.get(
 // Create routes starts
 
 router.post(
-    "/",isLoggedIn,
+    "/", isLoggedIn,
     validateItem,
-    wrapAsync( 
+    wrapAsync(
         async (req, res, next) => {
             const newItem = new Item(req.body.item);
+            // new add for owner id
+            newItem.owner = req.user._id;
+             // new add for owner id
             await newItem.save();
             req.flash("success", "New Product Added!");
             res.redirect("/items");
@@ -95,9 +102,9 @@ router.get(
             let { id } = req.params;
             const item = await Item.findById(id);
             if (!item) {
-            req.flash("error", "Item you requested does not exist");
-            return res.redirect("/items");
-        }
+                req.flash("error", "Item you requested does not exist");
+                return res.redirect("/items");
+            }
             res.render("items/edit.ejs", { item });
         })
 );
@@ -116,7 +123,7 @@ router.put(
             let { id } = req.params;
             await Item.findByIdAndUpdate(id, { ...req.body.item });
             req.flash("success", 'product Updated');
-            
+
             res.redirect(`/items/${id}`);
         })
 );

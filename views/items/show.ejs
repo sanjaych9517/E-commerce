@@ -10,17 +10,31 @@
       <img src="<%= item.image %>" class="card-img-top show-img mt-4" alt="item_image" />
       <div class="card-body">
         <p class="card-text">
-          <%= item.title %> <br>
-            <%= item.description %> <br>
-              &#8377; <%= (item.price ?? 0).toLocaleString("en-IN") %> <br>
-                <%= item.category %> <br>
-                  <%= item.brand %> <br>
-                    Number of component: <%= item.stock %>
-                      </i>
+          <i>
+             Owned by this Product :<b> 
+               <%= item.owner ? item.owner.username : "Unknown User" %>
+            </b><br>
+            
+              <%= item.title %>
+            <br>
+            
+              <%= item.description %>
+            <br>
+            &#8377; <%= (item.price ?? 0).toLocaleString("en-IN") %>
+           <br>
+            
+              <%= item.category %>
+            <br>
+            
+              <%= item.brand %> <br>
+                Number of component: <%= item.stock %>
+            
+          </i>
         </p>
       </div>
-
     </div>
+    <!-- for authentication user and edit button -->
+     <% if(currentUser && currentUser._id.equals(item.owner._id)) { %>
     <div class="btns">
       <a href="/items/<%= item._id%>/edit" class="btn btn-danger  offset-3 edit mt-4">Edit</a>
 
@@ -28,7 +42,7 @@
         <button class="btn btn-dark offset-4 delete mt-4">Delete </button>
       </form>
     </div>
-
+<% } %>
     <!-- for review  -->
     <div class="col-8 offset-2 mt-4 mb-2">
       <hr>
@@ -85,7 +99,7 @@
             <div class="d-flex justify-content-end p-3">
               <form action="/items/<%= item._id %>/reviews/<%= review._id %>?_method=DELETE" method="POST">
 
-               <button class="btn btn-dark px-4 py-2 delete">
+                <button class="btn btn-dark px-4 py-2 delete">
                   Delete
                 </button>
               </form>
