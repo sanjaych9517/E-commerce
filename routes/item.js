@@ -1,141 +1,45 @@
 const express = require('express');
 const router = express.Router();
 const wrapAsync = require("../utils/wrapAsync.js");
-
 const Item = require("../models/item.js");
-const mongoose = require("mongoose");
 const { isLoggedIn, isOwner, validateItem, validateReview } = require("../middleware.js")
 
+
+const itemController = require("../controllers/item.js")
+
 // index route start
-router.get(
-    "/",
-    wrapAsync(
-        async (req, res) => {
-            const allItems = await Item.find({});
-            res.render("items/index.ejs", { allItems });
-        })
-);
-// index route end
+router.get("/", wrapAsync(itemController.index));
 
 // start new route
 router.get(
     "/new", isLoggedIn,
-    wrapAsync(
-        async (req, res) => {
-
-            res.render("items/new.ejs");
-        })
-);
-// end new route
+    wrapAsync(itemController.renderNewForm));
 
 //  show route start
 
 router.get(
-    "/:id",
-    wrapAsync(async (req, res) => {
-
-        let { id } = req.params;
-
-        console.log("Received ID:", id);
-
-        // Check valid ObjectId
-        if (!mongoose.Types.ObjectId.isValid(id)) {
-            req.flash("error", "Invalid item ID");
-            return res.redirect("/items");
-        }
-
-        let item = await Item.findById(id)
-        .populate({
-            path: "reviews",
-            populate: {
-                path: "author",
-            },
-            
-         })
-        .populate("owner");
-
-        if (!item) {
-            req.flash("error", "Item you requested does not exist");
-            return res.redirect("/items");
-        }
-         console.log(item);
-        res.render("items/show.ejs", { item });
-    })
-);
-// show route end
-
+    "/:id", wrapAsync(itemController.showItem));
 
 // Create routes starts
-
 router.post(
-    "/", isLoggedIn,
-    validateItem,
-    wrapAsync(
-        async (req, res, next) => {
-            const newItem = new Item(req.body.item);
-            // new add for owner id
-            newItem.owner = req.user._id;
-             // new add for owner id
-            await newItem.save();
-            req.flash("success", "New Product Added!");
-            res.redirect("/items");
-        })
-);
-
-// Create routes end
+    "/", isLoggedIn, validateItem,
+    wrapAsync(itemController.createItem));
 
 // start edit route
 router.get(
-    "/:id/edit",
-    isOwner,
-    isLoggedIn,
-    wrapAsync(
-        async (req, res) => {
-            let { id } = req.params;
-            const item = await Item.findById(id);
-            if (!item) {
-                req.flash("error", "Item you requested does not exist");
-                return res.redirect("/items");
-            }
-            res.render("items/edit.ejs", { item });
-        })
-);
-// end edit routes
+    "/:id/edit",isOwner, isLoggedIn,
+    wrapAsync(itemController.renderEditForm));
 
 //  start update route
 router.put(
-    "/:id",
-    isLoggedIn,
-    isOwner,
-    validateItem,
-    wrapAsync(
-        async (req, res) => {
-            if (!req.body.item) {
-                throw new ExpressError(400, "Send valid data for items");
-            }
-            let { id } = req.params;
-    
-            await Item.findByIdAndUpdate(id, { ...req.body.item });
-            req.flash("success", 'product Updated');
+    "/:id", isLoggedIn,isOwner,validateItem,
+    wrapAsync(itemController.updateItem));
 
-            res.redirect(`/items/${id}`);
-        })
-);
-// end update route
 
 // start delete routes
 router.delete(
-    "/:id",
-    isOwner,
-    isLoggedIn,
-    wrapAsync(
-        async (req, res) => {
-            let { id } = req.params;
-            let deletedItem = await Item.findByIdAndDelete(id);
-            req.flash("success", 'Product Deleted');
-            res.redirect("/items");
-        })
-);
-// end delete routes
+    "/:id",isOwner,isLoggedIn,
+    wrapAsync(itemController.destroyItem));
+
 
 module.exports = router;
