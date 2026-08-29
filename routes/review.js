@@ -51,21 +51,5 @@ router.delete(
     })
 );
 
-// router.delete(
-//     "/:reviewId",
-//     isLoggedIn,
-//     // isReviewAuthor,
-//     //  isOwner,
-//     isReviewAuthorOrOwner,
-//     wrapAsync(
-//         async (req, res) => {
-//             let { id, reviewId } = req.params;
-//             await Item.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
-//             await Review.findByIdAndDelete(reviewId);
-//              req.flash("success", " Review deleted!");
-//             res.redirect(`/items/${id}`)
-//         }
-//     ));
-// // review routes end
 
 module.exports = router;
