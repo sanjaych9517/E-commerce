@@ -1,3 +1,6 @@
+const dns = require("dns");
+
+dns.setServers(["8.8.8.8", "8.8.4.4"]);
 if(process.env.NODE_ENV !="production"){
     require('dotenv').config();
 }
@@ -20,7 +23,8 @@ const reviewRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
 
 
-const MONGO_URL = "mongodb://127.0.0.1:27017/Ecommerce";
+// const MONGO_URL = "mongodb://127.0.0.1:27017/Ecommerce";
+const dbUrl = process.env.ATLASDB_URL;
 const PORT = 5001;
 
 main().then(() => {
@@ -36,10 +40,15 @@ app.use(methodOverride("_method"));
 app.engine('ejs', ejsMate);
 app.use(express.static(path.join(__dirname, "/public")));
 
-async function main() {
-    await mongoose.connect(MONGO_URL);
-}
 
+
+async function main() {
+    await mongoose.connect(dbUrl);
+    console.log("✅ MongoDB Atlas connected successfully");
+    console.log("Database name:", mongoose.connection.name);
+    console.log("Collection will be:", mongoose.model("Item").collection.name);
+}
+ 
 // cookies parser start
 
 const sessionOptions = {
