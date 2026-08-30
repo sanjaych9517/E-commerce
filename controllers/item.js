@@ -40,9 +40,15 @@ module.exports.showItem = async (req, res) => {
 // create routes
 
 module.exports.createItem = async (req, res, next) => {
+
     const newItem = new Item(req.body.item);
-    // new add for owner id
+    // nowner id
     newItem.owner = req.user._id;
+    // multiple images
+    newItem.image = req.files.map(file => ({
+        url: file.path,
+        filename: file.filename
+    }));
     // new add for owner id
     await newItem.save();
     req.flash("success", "New Product Added!");
@@ -66,7 +72,22 @@ module.exports.updateItem = async (req, res) => {
     }
     let { id } = req.params;
 
-    await Item.findByIdAndUpdate(id, { ...req.body.item });
+    let item = await Item.findByIdAndUpdate(
+        id,
+        { ...req.body.item },
+        { new: true, runValidators: true }
+    );
+
+    // Multiple images
+    if (req.files && req.files.length > 0) {
+        item.image = req.files.map(file => ({
+            url: file.path,
+            filename: file.filename
+        }));
+
+        await item.save();
+    }
+
     req.flash("success", 'product Updated');
 
     res.redirect(`/items/${id}`);

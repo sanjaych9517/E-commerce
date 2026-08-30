@@ -1,39 +1,66 @@
 <% layout("/layouts/boilerplate") %>
-     
-    
-        <h3>All Items</h3>
-        
 
-        <!-- card start -->
-        <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 card-wrap">
+    <div class="container-fluid px-3 px-md-4 px-lg-5">
+        <h3 class="my-4">Welcome to My website</h3>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
 
             <% for(let item of allItems){ %>
+                <div class="col">
+                    <div class="card h-100 d-flex flex-column">
+                        <!-- Image + Product Details -->
+                        <div>
+                            <a href="/items/<%= item._id %>" class="text-decoration-none text-dark">
+                                <!-- Image -->
+                                <div class="position-relative">
+                                    <img src="<%= item.image[0].url %>" class="card-img-top img-fluid object-fit-cover"
+                                        alt="item_image" style="height: 20rem;">
 
-                <div class="card item-card" style="width: 17rem;">
-                    <a href="/items/<%= item._id %>" class="item-link">
-                        <div class="card-img-overla ">
-                            <i class="fa-regular fa-heart img-heart"></i>
-                        <img src="<%= item.image %>" class="card-img-top" alt="item_image" style="height: 20rem;">
-                        
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                <%= item.title %>
-                            </h5>
-                            <p class="card-text">
+                                    <!-- Heart -->
+                                    <button type="button" class="btn p-0 position-absolute top-0 end-0 m-3"
+                                        onclick="event.preventDefault(); event.stopPropagation();">
+                                        <i class="fa-regular fa-heart fs-4 text-danger"></i>
+                                    </button>
 
-                                <%= item.description %> <br>
+                                </div>
 
-                                    ₹<%= item.price ? item.price.toLocaleString("en-IN") : "Price not available" %> <br>
+                                <!-- Card Body -->
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        <%= item.title %>
+                                    </h5>
+                                    <p class="card-text">
+                                        <%= item.description %>
+                                            <br>
 
-                                        <b><i>only</i>
-                                            <%= item.stock %> <i> items left</i>
-                                        </b>
-                            </p>
-                            <a href="/items/<%= item._id %>" class="btn btn-primary ">Buy-now</a>
+                                            ₹<%= item.price ? item.price.toLocaleString("en-IN") : "Price not available"
+                                                %>
+                                                <br>
+                                                <b>
+                                                    <i>Only</i>
+                                                    <%= item.stock %>
+                                                        <i>items left</i>
+                                                </b>
+                                    </p>
+                                </div>
+                            </a>
                         </div>
-                        
-                    </a>
+                        <!-- Buttons -->
+                        <div class="card-footer bg-white border-0 mt-auto px-3 pb-3">
+                            <div class="d-flex flex-column flex-sm-row gap-2">
+
+                                <!-- Buy Now -->
+                                <a href="/items/<%= item._id %>" class="btn btn-primary flex-fill">
+                                    Buy Now
+                                </a>
+
+                                <!-- Add To Cart -->
+                                <button type="button" class="btn btn-success flex-fill">
+                                    Add to Cart
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-
                 <% } %>
+        </div>
+    </div>

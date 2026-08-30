@@ -7,7 +7,15 @@
       </h3>
     </div>
     <div class="card col-8 offset-2 show-card listing-card ">
-      <img src="<%= item.image %>" class="card-img-top show-img mt-4" alt="item_image" />
+      <div class="row g-3">
+        <% item.image.forEach(img=> { %>
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+            <img src="<%= img.url %>" class="img-fluid w-100 rounded object-fit-cover" alt="item_image"
+              style="height: 250px;">
+          </div>
+          <% }) %>
+      </div>
+
       <div class="card-body">
         <p class="card-text">
           <i>
@@ -33,8 +41,7 @@
         </p>
       </div>
     </div>
-    <!-- for authentication user and edit button -->
-    <% if(currentUser && currentUser._id.equals(item.owner._id)) { %>
+    <% if(currentUser && item.owner && currentUser._id.equals(item.owner._id)) { %>
       <div class="btns">
         <a href="/items/<%= item._id%>/edit" class="btn btn-danger  offset-3 edit mt-4">Edit</a>
 
@@ -48,8 +55,7 @@
           <hr>
           <h4>Leave a review</h4>
           <!-- for rating -->
-          <form action="/items/<%= item.id %>/reviews" method="POST" novalidate 
-            class="needs-validation">
+          <form action="/items/<%= item.id %>/reviews" method="POST" novalidate class="needs-validation">
             <!-- <div class="mb-3 mt-3">
               <label for="ratinng" class="form-label">Rating : </label>
               <input type="range" min="1" max="5" id="rating" name="review[rating]" class="form-range">
@@ -62,24 +68,12 @@
               <fieldset class="starability-slot">
 
                 <!-- <legend>First rating:</legend> -->
-                <input 
-                type="radio" 
-                id="no-rate" 
-                class="input-no-rate" 
-                name="review[rating]" 
-                value="1" 
-                checked
-                  aria-label="No rating."
-                />
+                <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1" checked
+                  aria-label="No rating." />
 
-                <input 
-                type="radio" 
-                id="first-rate1" 
-                name="review[rating]" 
-                value="1" 
-                />
+                <input type="radio" id="first-rate1" name="review[rating]" value="1" />
 
-                <label  for="first-rate1"title="Terrible">1 star</label>
+                <label for="first-rate1" title="Terrible">1 star</label>
                 <input type="radio" id="first-rate2" name="review[rating]" value="2" />
 
                 <label for="first-rate2" title="Not good">2 stars</label>
@@ -90,7 +84,7 @@
 
                 <label for="first-rate4" title="Very good">4 stars</label>
                 <input type="radio" id="first-rate5" name="review[rating]" value="5" />
-                
+
                 <label for="first-rate5" title="Amazing">5 stars</label>
               </fieldset>
             </div>
@@ -133,7 +127,7 @@
                   </i>
                 </p>
 
-                
+
 
                 <p class="card-text mb-0">
                   <i>

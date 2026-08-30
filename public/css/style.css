@@ -27,10 +27,9 @@ body{
 }
 
 /* card style start */
-.item-card {
-
-    /* border: none !important; */
-    margin-bottom: 2.2rem;
+/* .item-card {
+    
+    margin-bottom: 2rem;
     height: 100% !important;
     
 }
@@ -49,7 +48,7 @@ body{
 }
 
 .card-img-top {
-    height: 250px !important;
+    height: 200px !important;
     border-radius: 1.3rem !important;
     width: 100% !important;
     object-fit: contain !important;
@@ -58,14 +57,15 @@ body{
 .card-body {
     padding: 0 !important;
     display: flex !important;
-    flex-direction: column !important;
-}
-.card-body, .btn{
+    flex-direction: column !important; 
+} */
+/* .card-body, .btn{
     margin-top: auto !important;
     padding-bottom: 1rem !important;
 }
 .item-link{
     text-decoration: none !important;
+    color: black !important;
 }
 
 .img-heart{
@@ -77,8 +77,8 @@ body{
 
 .btn-primary{
     margin-top: 1.5rem !important;
-    font-size: 1.3em !important;
-}
+    width: 45% !important;
+} */
 /* Card effect */
 .card-img-overla{
     opacity: 1;
@@ -101,9 +101,6 @@ body{
 }
 
 .add-btn:hover{
-    /* background-color: #fff !important;
-    border-radius: 2px solid #fe424d !important;
-    color: black !important; */
      background-color: #fff !important;
     border: 1px solid #fe424d !important;
     color: black !important;
@@ -164,3 +161,4 @@ background-color: #fff !important;
     
     background-color: #fe424d !important;
 }
+

@@ -1,3 +1,7 @@
+if(process.env.NODE_ENV !="production"){
+    require('dotenv').config();
+}
+
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose')
@@ -36,8 +40,6 @@ async function main() {
     await mongoose.connect(MONGO_URL);
 }
 
-
-
 // cookies parser start
 
 const sessionOptions = {
@@ -73,17 +75,6 @@ app.use((req, res, next) => {
   res.locals.currentUser = req.user;
   next();
 });
-
-// app.get("/demouser", async(req, res) => {
-//   let fakeUser = new User({
-//     email: "student@gmail.com",
-//     username: "student",
-//   });
-//  let registeredUser = await User.register(fakeUser, "student@123");
-//  res.send(registeredUser);
-// });
-
-
 
 app.use("/items", itemRouter);
 app.use("/items/:id/:reviews", reviewRouter);

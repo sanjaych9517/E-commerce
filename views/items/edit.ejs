@@ -10,6 +10,7 @@
         action="/items/<%= item._id %>?_method=PUT"
         novalidate
         class="needs-validation"
+        enctype="multipart/form-data"
       >
         <!-- Title -->
         <div class="mb-3">
@@ -40,7 +41,7 @@
             rows="4"
             required
           >
-<%= item.description %></textarea
+      <%= item.description %></textarea
           >
 
           <div class="invalid-feedback">Please enter a short description.</div>
@@ -48,22 +49,22 @@
 
         <!-- Image -->
         <div class="mb-3">
-          <label for="image" class="form-label"> Image Link: </label>
+          <label for="image" class="form-label"> Upload New Image </label>
 
           <input
             name="item[image]"
-            value="<%= item.image %>"
             id="image"
-            type="url"
             class="form-control"
-            required
+            type="file"
+            accept="image/*"
+            multiple
           />
 
-          <div class="invalid-feedback">Please enter a valid link.</div>
+          <div class="invalid-feedback">No of image must be graterthan 0 or equalto 4</div>
         </div>
 
         <!-- Price + Category -->
-        <div class="row">
+        <div class="row ">
           <div class="mb-3 col-12 col-sm-5">
             <label for="price" class="form-label"> Price: </label>
 

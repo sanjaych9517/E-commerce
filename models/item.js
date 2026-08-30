@@ -9,9 +9,12 @@ const itemSchema = new Schema({
     },
     description: String,
     image: {
-        default: "https://m.media-amazon.com/images/I/71TjL3zBQQL._SX679_.jpg",
-        type: String,
-        set: (v) => v === "" ? "https://m.media-amazon.com/images/I/71TjL3zBQQL._SX679_.jpg" : v,
+        type: [
+            {
+                url: String,
+                filename: String
+            }
+        ],
     },
     price: Number,
     category: String,
@@ -23,7 +26,7 @@ const itemSchema = new Schema({
             ref: "Review",
         },
     ],
-    owner:{
+    owner: {
         type: Schema.Types.ObjectId,
         ref: "User",
     },
