@@ -44,6 +44,36 @@
       integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
       crossorigin="anonymous"
     ></script>
+
+    
+  <script>
+    const imageInput = document.getElementById("image");
+    const imageError = document.getElementById("imageError");
+
+    imageInput.addEventListener("change", function () {
+
+        const maxFiles = 4;
+        const maxSize = 2 * 1024 * 1024; // 2 MB
+
+        imageError.textContent = "";
+
+        if (this.files.length > maxFiles) {
+            imageError.textContent = "Maximum 4 images allowed.";
+            this.value = "";
+            return;
+        }
+
+        for (const file of this.files) {
+            if (file.size > maxSize) {
+                imageError.textContent =
+                    `"${file.name}" is larger than 2 MB.`;
+
+                this.value = "";
+                return;
+            }
+        }
+    });
+</script>
     <script src="/js/script.js"></script>
   </body>
 </html>

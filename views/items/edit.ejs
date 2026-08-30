@@ -1,145 +1,105 @@
 <% layout("/layouts/boilerplate") %>
 
-<div class="container">
-  <div class="row justify-content-center mt-3 mt-md-5 mb-4">
-    <div class="col-12 col-sm-10 col-md-9 col-lg-7">
-      <h3 class="text-center mb-4">Edit Your Item</h3>
+  <div class="container">
+    <div class="row justify-content-center mt-3 mt-md-5 mb-4">
+      <div class="col-12 col-sm-10 col-md-9 col-lg-7">
+        <h3 class="text-center mb-4">Edit Your Item</h3>
 
-      <form
-        method="POST"
-        action="/items/<%= item._id %>?_method=PUT"
-        novalidate
-        class="needs-validation"
-        enctype="multipart/form-data"
-      >
-        <!-- Title -->
-        <div class="mb-3">
-          <label for="title" class="form-label"> Title: </label>
+        <form method="POST" action="/items/<%= item._id %>?_method=PUT" novalidate class="needs-validation"
+          enctype="multipart/form-data">
+          <!-- Title -->
+          <div class="mb-3">
+            <label for="title" class="form-label"> Title: </label>
 
-          <input
-            name="item[title]"
-            id="title"
-            value="<%= item.title %>"
-            type="text"
-            class="form-control"
-            required
-          />
+            <input name="item[title]" id="title" value="<%= item.title %>" type="text" class="form-control" required />
 
+            <div class="invalid-feedback">
+              Please enter the name of your product.
+            </div>
+          </div>
+
+          <!-- Description -->
+          <div class="mb-3">
+            <label for="description" class="form-label"> Description: </label>
+
+            <textarea name="item[description]" id="description" class="form-control" rows="4" required>
+      <%= item.description %></textarea>
+            <div class="invalid-feedback">Please enter a short description.</div>
+          </div>
+
+          <!-- for preview image -->
+          <div class="mb-3 text-center">
+            <div class="mb-2">
+              <strong>Original Product Images:</strong>
+            </div>
+            <div class="d-flex flex-wrap justify-content-center align-items-center gap-3">
+              <% item.image.forEach(img=> { %>
+                <img src="<%= img.url %>" class="img-fluid object-fit-cover rounded"
+                  style="width: 130px; height: 100px;" alt="Product Image">
+                <% }) %>
+            </div>
+          </div>
+
+          <!-- Image -->
+          <div class="mb-3">
+            <label for="image" class="form-label"> Upload New Image </label>
+            <input name="item[image]" id="image" class="form-control" type="file" accept="image/*" multiple />
+           <div id="imageError" class="text-danger mt-2"></div>
           <div class="invalid-feedback">
-            Please enter the name of your product.
-          </div>
-        </div>
-
-        <!-- Description -->
-        <div class="mb-3">
-          <label for="description" class="form-label"> Description: </label>
-
-          <textarea
-            name="item[description]"
-            id="description"
-            class="form-control"
-            rows="4"
-            required
-          >
-      <%= item.description %></textarea
-          >
-
-          <div class="invalid-feedback">Please enter a short description.</div>
-        </div>
-
-        <!-- Image -->
-        <div class="mb-3">
-          <label for="image" class="form-label"> Upload New Image </label>
-
-          <input
-            name="item[image]"
-            id="image"
-            class="form-control"
-            type="file"
-            accept="image/*"
-            multiple
-          />
-
-          <div class="invalid-feedback">No of image must be graterthan 0 or equalto 4</div>
-        </div>
-
-        <!-- Price + Category -->
-        <div class="row ">
-          <div class="mb-3 col-12 col-sm-5">
-            <label for="price" class="form-label"> Price: </label>
-
-            <input
-              name="item[price]"
-              id="price"
-              value="<%= item.price %>"
-              type="number"
-              min="1"
-              class="form-control"
-              required
-            />
-
-            <div class="invalid-feedback">Please enter a valid price.</div>
-          </div>
-
-          <div class="mb-3 col-12 col-sm-7">
-            <label for="category" class="form-label"> Category: </label>
-
-            <input
-              name="item[category]"
-              id="category"
-              value="<%= item.category %>"
-              type="text"
-              class="form-control"
-              required
-            />
-
-            <div class="invalid-feedback">
-              Please enter the category of your product.
+              Please select 1 to 4 images.
             </div>
-          </div>
-        </div>
 
-        <!-- Stock + Brand -->
-        <div class="row">
-          <div class="mb-3 col-12 col-sm-5">
-            <label for="stock" class="form-label"> No. of Stocks: </label>
+          <!-- Price + Category -->
+          <div class="row ">
+            <div class="mb-3 col-12 col-sm-5">
+              <label for="price" class="form-label"> Price: </label>
 
-            <input
-              name="item[stock]"
-              id="stock"
-              value="<%= item.stock %>"
-              type="number"
-              min="1"
-              class="form-control"
-              required
-            />
+              <input name="item[price]" id="price" value="<%= item.price %>" type="number" min="1" class="form-control"
+                required />
 
-            <div class="invalid-feedback">
-              Please enter the number of stocks.
+              <div class="invalid-feedback">Please enter a valid price.</div>
+            </div>
+
+            <div class="mb-3 col-12 col-sm-7">
+              <label for="category" class="form-label"> Category: </label>
+
+              <input name="item[category]" id="category" value="<%= item.category %>" type="text" class="form-control"
+                required />
+
+              <div class="invalid-feedback">
+                Please enter the category of your product.
+              </div>
             </div>
           </div>
 
-          <div class="mb-3 col-12 col-sm-7">
-            <label for="brand" class="form-label"> Brand: </label>
+          <!-- Stock + Brand -->
+          <div class="row">
+            <div class="mb-3 col-12 col-sm-5">
+              <label for="stock" class="form-label"> No. of Stocks: </label>
 
-            <input
-              name="item[brand]"
-              id="brand"
-              value="<%= item.brand %>"
-              type="text"
-              class="form-control"
-              required
-            />
+              <input name="item[stock]" id="stock" value="<%= item.stock %>" type="number" min="1" class="form-control"
+                required />
 
-            <div class="invalid-feedback">Please enter your product brand.</div>
+              <div class="invalid-feedback">
+                Please enter the number of stocks.
+              </div>
+            </div>
+
+            <div class="mb-3 col-12 col-sm-7">
+              <label for="brand" class="form-label"> Brand: </label>
+
+              <input name="item[brand]" id="brand" value="<%= item.brand %>" type="text" class="form-control"
+                required />
+
+              <div class="invalid-feedback">Please enter your product brand.</div>
+            </div>
           </div>
-        </div>
 
-        <!-- Edit Button -->
-        <div class="d-grid d-sm-block mt-3">
-          <button type="submit" class="btn btn-dark">Edit</button>
-        </div>
-      </form>
+          <!-- Edit Button -->
+          <div class="d-grid d-sm-block mt-3">
+            <button type="submit" class="btn btn-dark">Edit</button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
-</div>
