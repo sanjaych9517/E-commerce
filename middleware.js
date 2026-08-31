@@ -39,14 +39,30 @@ module.exports.isOwner = async (req, res, next) => {
     next();
 };
 
+//  for deleting review author ho ya koi aur person
 module.exports.isReviewAuthorOrOwner = async (req, res, next) => {
     let { id, reviewId } = req.params;
 
     let item = await Item.findById(id);
     let review = await Review.findById(reviewId);
 
-    let isOwner = item.owner._id.equals(res.locals.currentUser._id);
-    let isReviewAuthor = review.author.equals(res.locals.currentUser._id);
+    if (!item) {
+        req.flash("error", "Item not found.");
+        return res.redirect("/items");
+    }
+
+    if (!review) {
+        req.flash("error", "Review not found.");
+        return res.redirect(`/items/${id}`);
+    }
+
+    let isOwner =
+        item.owner &&
+        item.owner.equals(res.locals.currentUser._id);
+
+    let isReviewAuthor =
+        review.author &&
+        review.author.equals(res.locals.currentUser._id);
 
     if (!isOwner && !isReviewAuthor) {
         req.flash(

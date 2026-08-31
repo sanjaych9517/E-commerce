@@ -21,6 +21,7 @@ const User = require("./models/user.js");
 const itemRouter = require("./routes/item.js");
 const reviewRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
+const MongoStore = require("connect-mongo").default;
 
 
 // const MONGO_URL = "mongodb://127.0.0.1:27017/Ecommerce";
@@ -44,15 +45,23 @@ app.use(express.static(path.join(__dirname, "/public")));
 
 async function main() {
     await mongoose.connect(dbUrl);
-    console.log("✅ MongoDB Atlas connected successfully");
-    console.log("Database name:", mongoose.connection.name);
-    console.log("Collection will be:", mongoose.model("Item").collection.name);
+    // console.log(" MongoDB Atlas connected successfully");
+    // console.log("Database name:", mongoose.connection.name);
 }
+const store = MongoStore.create({
+    mongoUrl: dbUrl,
+    crypto:{
+        secret: process.env.SECRET,
+    },
+    touchAfter: 24 * 3600,
+})
+
  
 // cookies parser start
 
 const sessionOptions = {
-    secret: "mysupersecretcode",
+    store,
+    secret: "process.env.SECRET",
     resave: false,
     saveUninitialized : true,
     cookie:{
